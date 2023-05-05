@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 
+import router from "./routes/index";
+
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -29,3 +31,5 @@ mongoose
   .catch((error) => {
     console.error(`Failed to connect to MongoDB: ${error}`);
   });
+
+app.use("/", router());
