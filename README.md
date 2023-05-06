@@ -2,7 +2,7 @@
 
 Ini adalah Project Based Learning dari Typescript berupa REST API
 
-Project Based Learning _Typescript_ REST api adalah sebuah proyek belajar pemrograman dengan menggunakan bahasa _Typescript_ yang fokus pada pembuatan RESTful API. Pada proyek ini, Anda akan mempelajari cara mengembangkan aplikasi web dengan menggunakan _Node.js_ dan _Express.js_, serta menggunakan database _MongoDB_ sebagai penyimpan data.
+Project Based Learning **Typescript** REST api adalah sebuah proyek belajar pemrograman dengan menggunakan bahasa **Typescript** yang fokus pada pembuatan RESTful API. Pada proyek ini, Anda akan mempelajari cara mengembangkan aplikasi web dengan menggunakan **Node.js** dan **Express.js**, serta menggunakan database **MongoDB** sebagai penyimpan data.
 
 ---
 
@@ -30,9 +30,9 @@ Install dependencies:
 cd TS-REST npm install
 ```
 
-_PENTING!_: Buat file .env di direktori root proyek dengan konfigurasi berikut:
+**PENTING!**: Buat file .env di direktori root proyek dengan konfigurasi berikut:
 
-```bash
+```env
 MONGO_URL=mongodb://{username}:{password}@{host}:{port}/{database}
 PORT=3000
 SECRET_ACCESS_TOKEN={random-string}
