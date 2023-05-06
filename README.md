@@ -32,7 +32,7 @@ cd TS-REST npm install
 
 **PENTING!**: Buat file .env di direktori root proyek dengan konfigurasi berikut:
 
-```bash
+```env
 MONGO_URL=mongodb://{username}:{password}@{host}:{port}/{database}
 PORT=3000
 SECRET_ACCESS_TOKEN={random-string}
