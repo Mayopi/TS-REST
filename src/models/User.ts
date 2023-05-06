@@ -6,6 +6,7 @@ interface IUser extends Document {
   username: string;
   authentication: {
     password: string;
+    salt: string;
     sessionToken: string;
   };
 }
@@ -17,6 +18,11 @@ const UserSchema = new Schema({
     password: {
       type: String,
       required: true,
+      select: false,
+    },
+
+    salt: {
+      type: String,
       select: false,
     },
 
@@ -35,6 +41,7 @@ UserSchema.pre("save", async function (next) {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(user.authentication.password, salt);
     user.authentication.password = hash;
+    user.authentication.salt = salt;
     return next();
   } catch (error) {
     return next(error);

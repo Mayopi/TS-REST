@@ -4,7 +4,6 @@ import { getUserByEmail, User } from "../models/User";
 export const register = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { email, username, password } = req.body;
-    console.log(req.body);
 
     if (!email || !username || !password)
       return res.status(400).json({
