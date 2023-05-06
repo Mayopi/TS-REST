@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 config();
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -18,7 +18,20 @@ app.use(
   })
 );
 
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(`Received ${req.method} request to ${req.url}`);
+  console.log(`Request body before bodyParser: ${JSON.stringify(req.body)}`);
+  next();
+});
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(`Request body after bodyParser: ${JSON.stringify(req.body)}`);
+  next();
+});
+
 app.use(cookieParser());
 
 mongoose
