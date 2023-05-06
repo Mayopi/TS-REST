@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { getUserByEmail, User } from "../models/User";
+import { getUserByEmail, getUserBySessionToken, User } from "../models/User";
 import { responses } from "../lib/response";
 import { createToken } from "../lib/session";
 
@@ -20,6 +20,27 @@ export const signin = async (req: Request, res: Response): Promise<Response> => 
       error: error.message,
     });
   }
+};
+
+export const signout = async (req: Request, res: Response): Promise<Response> => {
+  const { access_token: session } = req.cookies;
+
+  if (!session)
+    return responses(res, 200, {
+      message: "Success",
+      status: 200,
+      data: "Signed out",
+    });
+
+  const user = await getUserBySessionToken(session);
+
+  res.clearCookie("access_token");
+
+  return responses(res, 200, {
+    message: "Success",
+    status: 200,
+    data: `Signed out as ${user.email}`,
+  });
 };
 
 export const register = async (req: Request, res: Response): Promise<Response> => {
