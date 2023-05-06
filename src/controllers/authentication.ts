@@ -1,6 +1,26 @@
 import { Response, Request } from "express";
 import { getUserByEmail, User } from "../models/User";
 import { responses } from "../lib/response";
+import { createToken } from "../lib/session";
+
+export const signin = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await getUserByEmail(email);
+
+    const token = await createToken({ email, password });
+
+    return res.cookie("access_token", token, { httpOnly: true, sameSite: "strict" }).json({ user, token });
+  } catch (error) {
+    console.log(error);
+    return responses(res, 400, {
+      message: "Failed",
+      status: 400,
+      error: error.message,
+    });
+  }
+};
 
 export const register = async (req: Request, res: Response): Promise<Response> => {
   try {

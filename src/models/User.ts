@@ -1,7 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 
-interface IUser extends Document {
+export interface IUser extends Document {
   email: string;
   username: string;
   authentication: {
@@ -50,14 +50,24 @@ UserSchema.pre("save", async function (next) {
 
 export const User = model<IUser>("User", UserSchema);
 
-export const getUser = async (): Promise<IUser[]> => {
+export const getUsers = async (): Promise<IUser[]> => {
   return await User.find();
 };
 
-export const getUserByEmail = async (email: string): Promise<IUser | null> => {
-  return await User.findOne({ email });
+export const getUserByEmail = async (email: string, select = false): Promise<IUser | null> => {
+  if (!select) return await User.findOne({ email });
+
+  return await User.findOne({ email }).select("+authentication.sessionToken +authentication.password");
 };
 
-export const getUserById = async (id: string): Promise<IUser | null> => {
-  return await User.findById(id);
+export const getUserById = async (id: string, select = false): Promise<IUser | null> => {
+  if (!select) return await User.findById(id);
+
+  return await User.findById(id).select("+authentication.sessionToken +authentication.password");
+};
+
+export const getUserBySessionToken = async (sessionToken: string, select = false): Promise<IUser | null> => {
+  if (!select) return await User.findOne({ "authentication.sessionToken": sessionToken });
+
+  return await User.findOne({ "authentication.sessionToken": sessionToken }).select("+authentication.password +authentication.sessionToken");
 };

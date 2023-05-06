@@ -1,10 +1,10 @@
 import { Request, Response, response } from "express";
-import { getUser } from "../models/User";
+import { getUsers } from "../models/User";
 import { responses } from "../lib/response";
 
 export const allUser = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const users = await getUser();
+    const users = await getUsers();
     return responses(res, 200, {
       message: "Success",
       status: 200,

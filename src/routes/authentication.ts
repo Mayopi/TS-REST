@@ -1,8 +1,7 @@
-import { Router, Request, Response } from "express";
-import { register } from "../controllers/authentication";
-import { allUser } from "../controllers/user";
+import { Router } from "express";
+import { register, signin } from "../controllers/authentication";
 
 export default (router: Router): void => {
   router.post("/api/auth/register", register);
-  router.get("/api/auth/user", allUser);
+  router.post("/api/auth/signin", signin);
 };
